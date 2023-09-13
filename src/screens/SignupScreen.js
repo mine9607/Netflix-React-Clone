@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import "./SignupScreen.css";
 import { auth } from "../firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 
 //review this page for authentication: https://firebase.google.com/docs/auth/web/start
 
@@ -12,34 +12,39 @@ function SignupScreen() {
   const register = async (event) => {
     event.preventDefault();
 
-    // await createUserWithEmailAndPassword(auth, emailRef.current.value, passwordRef.current.value)
-    //   .then((userCredential) => {
-    //     // Signed in
-    //     console.log(userCredential);
-    //     const user = userCredential.user;
-    //     console.log(user);
-    //     // ...
-    //   })
-    //   .catch((error) => {
-    //     const errorCode = error.code;
-    //     const errorMessage = error.message;
-    //     console.log(errorCode);
-    //     console.log(errorMessage);
-    //     // ..
-    //   });
-    console.log("clicked");
+    //const auth = getAuth();
+    createUserWithEmailAndPassword(auth, emailRef.current.value, passwordRef.current.value)
+      .then((userCredential) => {
+        // Signed in
+        console.log(userCredential);
+        const user = userCredential.user;
+        console.log(user);
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert(`${errorCode}:: ${errorMessage}`);
+        // ..
+      });
   };
 
-  // const signIn = (event) => {
-  //   event.preventDefault();
-
-  //   const loginEmailPassword = async () => {
-  //     const loginEmail = emailRef.current.value;
-  //     const loginPassword = passwordRef.current.value;
-
-  //     const userCredential = await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
-  //   };
-  // };
+  const signIn = (event) => {
+    event.preventDefault();
+    signInWithEmailAndPassword(auth, emailRef.current.value, passwordRef.current.value)
+      .then((userCredential) => {
+        //signed in
+        const user = userCredential.user;
+        console.log(user);
+        //...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert(`${errorCode}:: ${errorMessage}`);
+        // ..
+      });
+  };
 
   return (
     <div className="signupScreen">
@@ -47,7 +52,7 @@ function SignupScreen() {
         <h1>Sign In</h1>
         <input placeholder="Email" type="email" ref={emailRef} />
         <input placeholder="Password" type="password" ref={passwordRef} />
-        <button onClick type="submit">
+        <button onClick={signIn} type="submit">
           Sign In
         </button>
         <h4>
