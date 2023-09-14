@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser, login, logout } from "./features/userSlice";
 import { auth } from "./firebase";
@@ -36,8 +36,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route exact path="/login" element={!user ? <LoginScreen /> : <Navigate replace to={"/"} />} />
-        <Route exact path="/" element={<HomeScreen />} />
+        <Route exact path="/" element={user ? <HomeScreen /> : <LoginScreen />} />
         <Route exact path="/profile" element={<ProfileScreen />} />
       </Routes>
     </Router>
