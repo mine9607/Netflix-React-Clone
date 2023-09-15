@@ -5,7 +5,11 @@
   opacity: 0.8;
 }
 
-.plansScreen__info > button {
+.plansScreen__plan--disabled > button {
+  background-color: gray !important;
+}
+
+.plansScreen__plan > button {
   padding: 10px 20px;
   font-size: 1rem;
   color: white;
